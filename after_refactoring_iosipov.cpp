@@ -1,5 +1,5 @@
-﻿#include <iostream>
-#include <cmath>
+﻿#include <cmath>
+#include <iostream>
 
 const int ARRAY_SIZE = 10;
 const std::string INPUT_PROMPT = "Введите ";
