@@ -7,9 +7,9 @@ namespace ioa {
 
     const MenuItem* exit(const MenuItem* current);
 
-    const MenuItem* institute_spbu(const MenuItem* current);
-    const MenuItem* institute_itmo(const MenuItem* current);
-    const MenuItem* institute_spbstu(const MenuItem* current);
-    const MenuItem* institute_etu(const MenuItem* current);
-    const MenuItem* institute_back(const MenuItem* current);
+    const MenuItem* institutes_spbu(const MenuItem* current);
+    const MenuItem* institutes_itmo(const MenuItem* current);
+    const MenuItem* institutes_spbstu(const MenuItem* current);
+    const MenuItem* institutes_etu(const MenuItem* current);
+    const MenuItem* institutes_go_back(const MenuItem* current);
 }

@@ -21,27 +21,27 @@ const ioa::MenuItem* ioa::exit(const MenuItem* current) {
     std::exit(0);
 }
 
-const ioa::MenuItem* ioa::institute_spbu(const MenuItem* current){
+const ioa::MenuItem* ioa::institutes_spbu(const MenuItem* current){
     //
     std::cout << current->title << std::endl;
     return current->parent;
 }
-const ioa::MenuItem* ioa::institute_itmo(const MenuItem* current){
+const ioa::MenuItem* ioa::institutes_itmo(const MenuItem* current){
     //
     std::cout << current->title << std::endl;
     return current->parent;
 }
-const ioa::MenuItem* ioa::institute_spbstu(const MenuItem* current){
+const ioa::MenuItem* ioa::institutes_spbstu(const MenuItem* current){
     //
     std::cout << current->title << std::endl;
     return current->parent;
 }
-const ioa::MenuItem* ioa::institute_etu(const MenuItem* current){
+const ioa::MenuItem* ioa::institutes_etu(const MenuItem* current){
     //
     std::cout << current->title << std::endl;
     return current->parent;
 }
-const ioa::MenuItem* ioa::institute_back(const MenuItem* current){
+const ioa::MenuItem* ioa::institutes_go_back(const MenuItem* current){
     //
     return current->parent->parent;
 }
