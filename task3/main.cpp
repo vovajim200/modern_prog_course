@@ -21,9 +21,9 @@ int main()
         &institute_spbstu,
         &institute_etu
     };
-    const int institute__size = sizeof(institute_children) / sizeof(institute_children[0]);
+    const int institute_size = sizeof(institute_children) / sizeof(institute_children[0]);
 
-    ioa::MenuItem see_institutes = { "1 - посмотерть университеты Санкт-Петербурга", ioa::show_menu, institute_children, institute__size };
+    ioa::MenuItem see_institutes = { "1 - посмотерть университеты Санкт-Петербурга", ioa::show_menu, institute_children, institute_size };
     ioa::MenuItem exit = { "0 - Я уже студент", ioa::exit };
     
     ioa::MenuItem* main_children[] = { &exit, &see_institutes };
@@ -31,13 +31,18 @@ int main()
 
     ioa::MenuItem main = { nullptr, ioa::show_menu, main_children, main_size };
 
-    main.func(&main);
-    int user_input;
-    do {
-        std::cin >> user_input;
-        std::cout << std::endl;
+    institute_back.parent = &see_institutes;
+    institute_spbu.parent = &see_institutes;
+    institute_itmo.parent = &see_institutes;
+    institute_spbstu.parent = &see_institutes;
+    institute_etu.parent = &see_institutes;
 
-        main.children[user_input]->func(main.children[user_input]);
+    see_institutes.parent = &main;
+    exit.parent = &main;
+
+    const ioa::MenuItem* current = &main;
+    do {
+        current = current->func(current);
     } while (true);
 
     return 0;
