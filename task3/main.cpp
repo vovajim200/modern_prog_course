@@ -8,10 +8,25 @@ int main()
 {
     std::setlocale(LC_ALL, "");
 
-    ioa::MenuItem study = { "1 - посмотерть университеты Санкт-Петербурга", ioa::study };
+    ioa::MenuItem institute_spbu = { "1 - СПБГУ", ioa::institute_spbu};
+    ioa::MenuItem institute_itmo = { "2 - ИТМО", ioa::institute_itmo};
+    ioa::MenuItem institute_spbstu = { "3 - Политех", ioa::institute_spbstu};
+    ioa::MenuItem institute_etu = { "4 - ЛЭТИ", ioa::institute_etu};
+    ioa::MenuItem institute_back = { "0 - Выйти в главное меню", ioa::institute_back};
+
+    ioa::MenuItem* institute_children[] = {
+        &institute_back,
+        &institute_spbu,
+        &institute_itmo,
+        &institute_spbstu,
+        &institute_etu
+    };
+    const int study_size = sizeof(institute_children) / sizeof(institute_children[0]);
+
+    ioa::MenuItem see_institutes = { "1 - посмотерть университеты Санкт-Петербурга", ioa::study };
     ioa::MenuItem exit = { "0 - Я уже студент", ioa::exit };
     
-    ioa::MenuItem* main_children[] = { &exit, &study };
+    ioa::MenuItem* main_children[] = { &exit, &see_institutes };
     const int main_size = sizeof(main_children) / sizeof(main_children[0]);
 
     int user_input;
