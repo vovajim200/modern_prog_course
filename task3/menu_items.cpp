@@ -4,9 +4,33 @@
 
 #include "menu_functions.hpp"
 
-const ioa::MenuItem ioa::INSTITUTES_SPBU = {
-    "1 - СПБГУ", ioa::institutes_spbu, &ioa::SEE_INSTITUTES
+const ioa::MenuItem ioa::SPBU_AMCP = {
+    "1 - Факультет ПМ-ПУ", ioa::spbu_amcp, &ioa::INSTITUTES_SPBU
 };
+const ioa::MenuItem ioa::SPBU_MATH = {
+    "2 - Факультет МатМех", ioa::spbu_math, &ioa::INSTITUTES_SPBU
+};
+const ioa::MenuItem ioa::SPBU_LING = {
+    "3 - Лингвистический факультет", ioa::spbu_ling, &ioa::INSTITUTES_SPBU
+};
+const ioa::MenuItem ioa::SPBU_GO_BACK = {
+    "0 - Выйти в предыдущее меню", ioa::spbu_go_back, &ioa::INSTITUTES_SPBU
+};
+
+namespace {
+    const ioa::MenuItem* const spbu_children[] = {
+        &ioa::SPBU_GO_BACK,
+        &ioa::SPBU_AMCP,
+        &ioa::SPBU_MATH,
+        &ioa::SPBU_LING
+    };
+    const int spbu_size = sizeof(spbu_children) / sizeof(spbu_children[0]);
+}
+
+const ioa::MenuItem ioa::INSTITUTES_SPBU = {
+    "1 - СПбГУ", ioa::show_menu, &ioa::SEE_INSTITUTES, spbu_children, spbu_size
+};
+
 const ioa::MenuItem ioa::INSTITUTES_ITMO = {
     "2 - ИТМО", ioa::institutes_itmo, &ioa::SEE_INSTITUTES
 };
@@ -41,8 +65,8 @@ const ioa::MenuItem ioa::EXIT = {
 
 namespace {
     const ioa::MenuItem* const main_children[] = {
-        &ioa::SEE_INSTITUTES,
-        &ioa::EXIT
+        &ioa::EXIT,
+        &ioa::SEE_INSTITUTES
     };
     const int main_size = sizeof(main_children) / sizeof(main_children[0]);
 }
