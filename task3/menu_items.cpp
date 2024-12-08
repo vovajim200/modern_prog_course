@@ -44,4 +44,9 @@ namespace {
         &ioa::SEE_INSTITUTES,
         &ioa::EXIT
     };
+    const int main_size = sizeof(main_children) / sizeof(main_children[0]);
 }
+
+const ioa::MenuItem ioa::MAIN = {
+    nullptr, ioa::show_menu, nullptr, main_children, main_size
+};
