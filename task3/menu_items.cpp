@@ -14,7 +14,7 @@ const ioa::MenuItem ioa::SPBU_LING = {
     "3 - Лингвистический факультет", ioa::spbu_ling, &ioa::INSTITUTES_SPBU
 };
 const ioa::MenuItem ioa::SPBU_GO_BACK = {
-    "0 - Выйти в предыдущее меню", ioa::spbu_go_back, &ioa::INSTITUTES_SPBU
+    "0 - Выйти в предыдущее меню", ioa::go_back, &ioa::INSTITUTES_SPBU
 };
 
 namespace {
@@ -41,7 +41,7 @@ const ioa::MenuItem ioa::INSTITUTES_ETU = {
     "4 - ЛЭТИ", ioa::institutes_etu, &ioa::SEE_INSTITUTES
 };
 const ioa::MenuItem ioa::INSTITUTES_GO_BACK = {
-    "0 - Выйти в главное меню", ioa::institutes_go_back, &ioa::SEE_INSTITUTES
+    "0 - Выйти в главное меню", ioa::go_back, &ioa::SEE_INSTITUTES
 };
 
 namespace {
