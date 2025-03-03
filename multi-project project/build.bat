@@ -16,3 +16,4 @@ cmake -G %BUILD_TYPE% ..\%SOURCE_FOLDER%
 cmake --build .
 
 copy ..\%SOURCE_FOLDER%\insertion_sort\run_insertion_sort.bat .\insertion_sort
+copy ..\%SOURCE_FOLDER%\insertion_sort_mf\run_insertion_sort_mf.bat .\insertion_sort_mf
