@@ -17,3 +17,4 @@ cmake --build .
 
 copy ..\%SOURCE_FOLDER%\insertion_sort\run_insertion_sort.bat .\insertion_sort
 copy ..\%SOURCE_FOLDER%\insertion_sort_mf\run_insertion_sort_mf.bat .\insertion_sort_mf
+copy ..\%SOURCE_FOLDER%\multi_level_menu\run_menu.bat .\multi_level_menu
