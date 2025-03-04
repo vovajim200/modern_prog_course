@@ -40,3 +40,6 @@
 
 # Builds
 build_*/
+
+# Libraries
+lib/
