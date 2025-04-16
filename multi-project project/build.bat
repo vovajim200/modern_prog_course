@@ -20,3 +20,5 @@ copy ..\%SOURCE_FOLDER%\insertion_sort_mf\run_insertion_sort_mf.bat .\insertion_
 copy ..\%SOURCE_FOLDER%\multi_level_menu\run_menu.bat .\multi_level_menu
 
 copy ..\run_tests.bat .
+
+pause
