@@ -41,3 +41,57 @@ TEST(LongNumberBasic, StringConstructorNegative) {
     ASSERT_EQ(num.get_rank_number(0), 0);
     ASSERT_TRUE(num.is_negative());
 }
+
+TEST(LongNumberComparasion, ZeroEqualZero) {
+    LongNumber a("0");
+    LongNumber b("0");
+    ASSERT_TRUE(a == b);
+}
+
+TEST(LongNumberComparasion, PositiveEqualPositive) {
+    LongNumber a("100");
+    LongNumber b("100");
+    ASSERT_TRUE(a == b);
+}
+
+TEST(LongNumberComparasion, NegativeEqualNegative) {
+    LongNumber a("-100");
+    LongNumber b("-100");
+    ASSERT_TRUE(a == b);
+}
+
+TEST(LongNumberComparasion, PositiveNotEqualNegative) {
+    LongNumber a("100");
+    LongNumber b("-100");
+    ASSERT_TRUE(a != b);
+}
+
+TEST(LongNumberComparasion, PositiveGreaterThanPositive) {
+    LongNumber a("100");
+    LongNumber b("99");
+    ASSERT_TRUE(a > b);
+}
+
+TEST(LongNumberComparasion, PositiveGreaterThanZero) {
+    LongNumber a("100");
+    LongNumber b("0");
+    ASSERT_TRUE(a > b);
+}
+
+TEST(LongNumberComparasion, PositiveGreaterThanNegative) {
+    LongNumber a("100");
+    LongNumber b("-100");
+    ASSERT_TRUE(a > b);
+}
+
+TEST(LongNumberComparasion, ZeroGreaterThanNegative) {
+    LongNumber a("0");
+    LongNumber b("-12");
+    ASSERT_TRUE(a > b);
+}
+
+TEST(LongNumberComparasion, NegativeGreaterThanNegative) {
+    LongNumber a("-99");
+    LongNumber b("-100");
+    ASSERT_TRUE(a > b);
+}

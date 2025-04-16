@@ -80,19 +80,39 @@ LongNumber& LongNumber::operator = (LongNumber&& x) {
 }
 
 bool LongNumber::operator == (const LongNumber& x) const {
-	// TODO
+	if (sign != x.sign || length != x.length) {
+		return false;
+	}
+	for (int i = 0; i < length; i++){
+		if (numbers[i] != x.numbers[i]) {
+			return false;
+		}
+	}
+	return true;
 }
 
 bool LongNumber::operator != (const LongNumber& x) const {
-	// TODO
+	return !(*this == x);
 }
 
 bool LongNumber::operator > (const LongNumber& x) const {
-	// TODO
+	if (sign != x.sign) {
+		return sign > x.sign;
+	}
+
+	if (length != x.length) {
+		return (length > x.length) ? (sign == 1) : (sign != 1);
+	}
+
+	for (int i = length - 1; i >= 0; i--) {
+		if (numbers[i] != x.numbers[i]) {
+			return (numbers[i] > x.numbers[i]) ? (sign == 1) : (sign != 1);
+		}
+	}
 }
 
 bool LongNumber::operator < (const LongNumber& x) const {
-	// TODO
+	return !(*this == x || *this > x);
 }
 
 LongNumber LongNumber::operator + (const LongNumber& x) const {
