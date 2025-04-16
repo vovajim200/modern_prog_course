@@ -3,11 +3,56 @@
 using oia::LongNumber;
 		
 LongNumber::LongNumber() {
-	// TODO
+	numbers = new int[1]{0};
+	length = 1;
+	sign = 0;
 }
 
 LongNumber::LongNumber(const char* const str) {
-	// TODO
+	if (str == nullptr || *str == '\0') {
+		numbers = new int[1]{0};
+		length = 1;
+		sign = 0;
+		return;
+	}
+
+	int start = 0;
+	sign = 1;
+
+	if (str[0] == '-'){
+		sign = -1;
+		start = 1;
+	}
+
+	// Мат. операции выполняются справа налево,
+	// будем хранить числа с младшего разряда
+
+	// Пропускаем ведущие нули
+
+	while (str[start] == '0' && str[start] != '\0') {
+		start++;
+	}
+
+	// Обрабатываем 0
+
+	if (str[start] == '\0') {
+		numbers = new int[1]{0};
+		length = 1;
+		sign = 0;
+		return;
+	}
+
+	// Вычисление длины с учетом знака
+
+	length = get_length(str+start);
+	numbers = new int[length];
+
+	// Заполняем в обратном порядке,
+	// - '0' преобразует символ в цифру
+
+	for (int i = 0; i < length; i++) {
+		numbers[i] = str[start + length - 1 - i] - '0';
+	}
 }
 
 LongNumber::LongNumber(const LongNumber& x) {
@@ -71,22 +116,26 @@ LongNumber LongNumber::operator % (const LongNumber& x) const {
 }
 
 int LongNumber::get_digits_number() const noexcept {
-	// TODO
+	return length;
 }
 
 int LongNumber::get_rank_number(int rank) const {
-	// TODO
+	return numbers[rank];
 }
 
 bool LongNumber::is_negative() const noexcept {
-	// TODO
+	return sign == -1;
 }
 
 // ----------------------------------------------------------
 // PRIVATE
 // ----------------------------------------------------------
 int LongNumber::get_length(const char* const str) const noexcept {
-	// TODO
+	int len = 0;
+	while ( str[len] != '\0' && isdigit(str[len]) ) {
+		len++;
+	}
+	return len == 0 ? 1 : len;
 }
 
 // ----------------------------------------------------------
@@ -94,6 +143,9 @@ int LongNumber::get_length(const char* const str) const noexcept {
 // ----------------------------------------------------------
 namespace oia {
 	std::ostream& operator << (std::ostream &os, const LongNumber& x) {
-		// TODO
+		if (x.is_negative()) os << '-';
+		for (int i = x.length - 1; i >=0; i--)
+			os << x.numbers[i];
+		return os;
 	}
 }
