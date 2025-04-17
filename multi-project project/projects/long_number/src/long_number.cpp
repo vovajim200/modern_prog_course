@@ -61,8 +61,11 @@ LongNumber::LongNumber(const LongNumber& x)
 		std::copy(x.numbers, x.numbers + length, numbers);
 }
 
-LongNumber::LongNumber(LongNumber&& x) {
-	// TODO
+LongNumber::LongNumber(LongNumber&& x)
+	: numbers(x.numbers), length(x.length), sign(x.sign) {
+		x.numbers = nullptr;
+		x.length = 0;
+		x.sign = 0;
 }
 
 LongNumber::~LongNumber() {
@@ -70,15 +73,34 @@ LongNumber::~LongNumber() {
 }
 
 LongNumber& LongNumber::operator = (const char* const str) {
-	// TODO
+	LongNumber temp(str);
+	*this = std::move(temp);
+	return *this;
 }
 
 LongNumber& LongNumber::operator = (const LongNumber& x) {
-	// TODO
+	if (this != &x) {
+		delete[] numbers;
+		length = x.length;
+		sign = x.sign;
+		numbers = new int[length];
+		std::copy(x.numbers, x.numbers + length, numbers);
+	}
+	return *this;
 }
 
 LongNumber& LongNumber::operator = (LongNumber&& x) {
-	// TODO
+	if (this != &x) {
+		delete[] numbers;
+		numbers = x.numbers;
+		length = x.length;
+		sign = x.sign;
+		
+		x.numbers = nullptr;
+		x.length = 0;
+		x.sign = 0;
+	}
+	return *this;
 }
 
 bool LongNumber::operator == (const LongNumber& x) const {
