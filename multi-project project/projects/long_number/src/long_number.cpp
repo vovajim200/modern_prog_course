@@ -55,8 +55,10 @@ LongNumber::LongNumber(const char* const str) {
 	}
 }
 
-LongNumber::LongNumber(const LongNumber& x) {
-	// TODO
+LongNumber::LongNumber(const LongNumber& x) 
+	: length(x.length), sign(x.sign)	{
+		numbers = new int[length];
+		std::copy(x.numbers, x.numbers + length, numbers);
 }
 
 LongNumber::LongNumber(LongNumber&& x) {
@@ -64,7 +66,7 @@ LongNumber::LongNumber(LongNumber&& x) {
 }
 
 LongNumber::~LongNumber() {
-	// TODO
+	delete[] numbers;
 }
 
 LongNumber& LongNumber::operator = (const char* const str) {
@@ -164,7 +166,7 @@ int LongNumber::get_length(const char* const str) const noexcept {
 namespace oia {
 	std::ostream& operator << (std::ostream &os, const LongNumber& x) {
 		if (x.is_negative()) os << '-';
-		for (int i = x.length - 1; i >=0; i--)
+		for (int i = x.length - 1; i >= 0; i--)
 			os << x.numbers[i];
 		return os;
 	}

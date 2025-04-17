@@ -27,6 +27,13 @@ TEST(LongNumberBasic, StringConstructorForNulls) {
     ASSERT_FALSE(num.is_negative());
 }
 
+TEST(LongNumberBasic, StringConstructorForNegativeNull) {
+    LongNumber num("-0");
+    ASSERT_EQ(num.get_digits_number(), 1);
+    ASSERT_EQ(num.get_rank_number(0), 0);
+    ASSERT_FALSE(num.is_negative());
+}
+
 TEST(LongNumberBasic, StringConstructorPositive) {
     LongNumber num("12345");
     ASSERT_EQ(num.get_digits_number(), 5);
@@ -94,4 +101,22 @@ TEST(LongNumberComparasion, NegativeGreaterThanNegative) {
     LongNumber a("-99");
     LongNumber b("-100");
     ASSERT_TRUE(a > b);
+}
+
+TEST(LongNumberConstructors, CopyConstructor) {
+    LongNumber original("-12345");
+    LongNumber copy(original);    
+    ASSERT_TRUE(original == copy)
+        << original << " " << copy;
+}
+
+TEST(LongNumberConstructors, CopyConstructorExtended) {
+    LongNumber original("-12345");
+    LongNumber copy(original);
+    
+    EXPECT_EQ(original.get_digits_number(), copy.get_digits_number());
+    EXPECT_EQ(original.is_negative(), copy.is_negative());
+    for (int i = 0; i < original.get_digits_number(); ++i) {
+        EXPECT_EQ(original.get_rank_number(i), copy.get_rank_number(i));
+    }
 }

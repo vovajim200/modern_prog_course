@@ -43,3 +43,6 @@ build_*/
 
 # Libraries
 lib/
+
+# Tests
+Testing/
