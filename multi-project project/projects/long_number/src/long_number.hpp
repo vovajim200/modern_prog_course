@@ -39,6 +39,7 @@ namespace oia {
 			int get_rank_number(const int rank) const;
 			bool is_negative() const noexcept;
 			bool compare_abs(const LongNumber& x) const;
+			bool abs_equal(const LongNumber& x) const;
 			
 			friend std::ostream& operator << (std::ostream &os, const LongNumber& x);
 			

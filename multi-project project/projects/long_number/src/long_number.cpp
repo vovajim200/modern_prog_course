@@ -208,17 +208,27 @@ LongNumber LongNumber::operator + (const LongNumber& x) const {
 	if (sign == 0) return x; 					// 0 + x = x
 	if (x.sign == 0) return *this;				// x + 0 = x
 
+	// (+x) + (+y) = +(x+y)
+	// (-x) + (-y) = -(x+y)
+	// знак от x
 	if (sign == x.sign) {
 		return add_abs(*this, x, sign);
 	}
 
-	if (sign == 1) {
-		return sub_abs(*this, x);				// +x + (-y) = x - y
-	} else {
-		LongNumber temp = sub_abs(x, *this);	// (-x) + y = y -x
-		temp.sign = (temp.length == 1 && temp.numbers[0] == 0) ? 0 : 1;
-		return temp;
-	}
+	auto zero = LongNumber();
+	if (compare_abs(x)) { // |this| > |x|
+        LongNumber result = sub_abs(*this, x);
+        if (result != zero) {
+            result.sign = sign; // знак x (большего по модулю)
+        }
+        return result;
+    } else {
+        LongNumber result = sub_abs(x, *this);
+        if (result != zero) {
+            result.sign = x.sign; // знак текущего объекта (большего по модулю)
+        }
+        return result;
+    }
 }
 
 // Если один из аргументов ноль - меняем знак
@@ -227,7 +237,40 @@ LongNumber LongNumber::operator + (const LongNumber& x) const {
 // Если одинаковые то вычитаем, знак определяется сравнением |this| |x|
 
 LongNumber LongNumber::operator - (const LongNumber& x) const {
-	// TODO
+
+	// 0 - a = -a, меняем знак
+	if (sign == 0) {
+		LongNumber result = x;
+		result.sign = !x.sign;
+		return result;
+	}
+	if (x.sign == 0) return x; // a - 0 = a
+
+	// (-x) - (+y) = -(x+y)
+	// x - (-y) = x + y
+	// знак от x (this)
+
+	if (sign != x.sign) {
+		return add_abs(*this, x, sign);
+	}
+
+	// знаки одинаковые, нужно вычесть из большего меньшее и взять нужный знак
+	bool is_abs_bigger = compare_abs(x);
+
+	LongNumber result;
+	if (is_abs_bigger) {
+		result = sub_abs(*this, x);
+	} else {
+		result = sub_abs(x, *this);
+	}
+
+	// здесь мог получится ноль, но он обработан в sub_abs
+	// устанавливаем знак того, чей больше
+	if (result != LongNumber()) {
+		result.sign = (is_abs_bigger) ? sign : -sign;
+	}
+	
+	return result;
 }
 
 LongNumber LongNumber::operator * (const LongNumber& x) const {
@@ -269,6 +312,15 @@ bool LongNumber::compare_abs(const LongNumber& x) const {
 	}
 
 	// одинаковы по длине и одинаковые разряды => равны
+	return false;
+}
+
+bool LongNumber::abs_equal(const LongNumber& x) const {
+	if (length == x.length) {
+		for (int i = length - 1; i >= 0; --i) {
+			return (numbers[i] == x.numbers[i]);
+		}
+	}
 	return false;
 }
 

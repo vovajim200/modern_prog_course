@@ -210,28 +210,28 @@ TEST(LongNumberCompareAbs, TwoEqualNegatives) {
 }
 
 
-// TEST(LongNumberArithMetic, SimpleSubstraction) {
-//     LongNumber a = "1234";
-//     LongNumber b = "123";
-//     ASSERT_TRUE(a - b == LongNumber("1111"));
-// }
+TEST(LongNumberArithMetic, SimpleSubstraction) {
+    LongNumber a = "1234";
+    LongNumber b = "123";
+    ASSERT_TRUE(a - b == LongNumber("1111"));
+}
 
-// TEST(LongNumberArithMetic, AddSubAllCases) {
-//     LongNumber n123("123");
-//     LongNumber n1234("1234");
-//     ASSERT_TRUE(n123 + n1234 == LongNumber("1357")) << "123 + 1234 = 1357";
+TEST(LongNumberArithMetic, AddSubAllCases) {
+    LongNumber n123("123");
+    LongNumber n1234("1234");
+    ASSERT_TRUE(n123 + n1234 == LongNumber("1357")) << "123 + 1234 = 1357";
 
-//     LongNumber n1("1");
-//     LongNumber nminus1("-1");
-//     LongNumber n0("0");
-//     LongNumber n999("999");
-//     LongNumber n1000("1000");
-//     LongNumber nminus1000("-1000");
-//     ASSERT_TRUE(nminus1 + n1 == n0) << "-1 + 1 = 0";
-//     ASSERT_TRUE(nminus1 + n0 == nminus1) << "-1 + 0 = -1";
-//     ASSERT_TRUE(n1 + n0 == n1) << "1 + 0 == 1";
-//     ASSERT_TRUE(n1000 - n999 == n1) << "1000 - 999 = 1";
-//     ASSERT_TRUE(nminus1000 + n999 == nminus1) << "-1000 + 999 = -1";
-//     ASSERT_TRUE(n999 - n1000 == nminus1) << "999 - 1000 = -1";
-//     ASSERT_TRUE(n1 + n999 == n1000) << "1 + 999 = 1000";
-// }
+    LongNumber n1("1");
+    LongNumber nminus1("-1");
+    LongNumber n0("0");
+    LongNumber n999("999");
+    LongNumber n1000("1000");
+    LongNumber nminus1000("-1000");
+    ASSERT_TRUE(nminus1 + n1 == n0) << "-1 + 1 = 0";
+    ASSERT_TRUE(nminus1 + n0 == nminus1) << "-1 + 0 = -1";
+    ASSERT_TRUE(n1 + n0 == n1) << "1 + 0 == 1";
+    ASSERT_TRUE(n1000 - n999 == n1) << "1000 - 999 = 1";
+    ASSERT_TRUE(nminus1000 + n999 == nminus1) << "-1000 + 999 = -1";
+    ASSERT_TRUE(n999 - n1000 == nminus1) << "999 - 1000 = -1";
+    ASSERT_TRUE(n1 + n999 == n1000) << "1 + 999 = 1000";
+}
