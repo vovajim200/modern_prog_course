@@ -200,6 +200,31 @@ LongNumber LongNumber::sub_abs(const LongNumber& x, const LongNumber& y) const {
 	return num;
 }
 
+LongNumber LongNumber::multiply_abs (const LongNumber& x, const LongNumber& y) const {
+	int* result = new int[x.length + y.length]{0};
+    int len = 0;
+
+    for (int i = 0; i < x.length; ++i) {
+        int carry = 0;
+        for (int j = 0; j < y.length || carry; ++j) {
+            int product = result[i + j] + x.numbers[i] * (j < y.length ? y.numbers[j] : 0) + carry;
+            result[i + j] = product % 10;
+            carry = product / 10;
+            len = std::max(len, i + j + 1);
+        }
+    }
+
+    // Удаление ведущих нулей
+    while (len > 1 && result[len-1] == 0) len--;
+
+    LongNumber num;
+    delete[] num.numbers;
+    num.numbers = result;
+    num.length = len;
+    num.sign = 1;
+    return num;
+}
+
 // Если один из аргументов = 0, возвращаем другой
 // Если одинаковые знаки - складываем модули и добавляем знак
 // Если противоположные - идем в вычитание
@@ -274,7 +299,12 @@ LongNumber LongNumber::operator - (const LongNumber& x) const {
 }
 
 LongNumber LongNumber::operator * (const LongNumber& x) const {
-	// TODO
+	if (sign == 0 || x.sign == 0) return LongNumber();
+
+    int result_sign = (sign == x.sign) ? 1 : -1;
+    LongNumber result = multiply_abs(*this, x);
+    result.sign = result_sign;
+    return result;
 }
 
 LongNumber LongNumber::operator / (const LongNumber& x) const {

@@ -28,6 +28,7 @@ namespace oia {
 
 			LongNumber add_abs(const LongNumber& x, const LongNumber& y, const int sign) const;
 			LongNumber sub_abs(const LongNumber& x, const LongNumber& y) const;
+			LongNumber multiply_abs(const LongNumber& x, const LongNumber& y) const;
 			
 			LongNumber operator + (const LongNumber& x) const;
 			LongNumber operator - (const LongNumber& x) const;

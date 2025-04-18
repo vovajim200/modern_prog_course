@@ -210,13 +210,13 @@ TEST(LongNumberCompareAbs, TwoEqualNegatives) {
 }
 
 
-TEST(LongNumberArithMetic, SimpleSubstraction) {
+TEST(LongNumberArithmeticBasic, SimpleSubstraction) {
     LongNumber a = "1234";
     LongNumber b = "123";
     ASSERT_TRUE(a - b == LongNumber("1111"));
 }
 
-TEST(LongNumberArithMetic, AddSubAllCases) {
+TEST(LongNumberArithmeticBasic, AddSubAllCases) {
     LongNumber n123("123");
     LongNumber n1234("1234");
     ASSERT_TRUE(n123 + n1234 == LongNumber("1357")) << "123 + 1234 = 1357";
@@ -234,4 +234,59 @@ TEST(LongNumberArithMetic, AddSubAllCases) {
     ASSERT_TRUE(nminus1000 + n999 == nminus1) << "-1000 + 999 = -1";
     ASSERT_TRUE(n999 - n1000 == nminus1) << "999 - 1000 = -1";
     ASSERT_TRUE(n1 + n999 == n1000) << "1 + 999 = 1000";
+}
+
+TEST(LongNumberArithmeticBasic, AdditionCommutativity) {
+    LongNumber n431("431");
+    LongNumber n753("753");
+    ASSERT_TRUE(n431 + n753 == n753 + n431) << "431 + 753 = 753 + 431 = 1184";
+
+    LongNumber nminus575("-575");
+    LongNumber nminus51("-51");
+    ASSERT_TRUE(nminus575 + nminus51 == nminus51 + nminus575) << "-575 + (-51) = -626 vs -51 + (-575) = -626";
+    ASSERT_TRUE(n753 + nminus51 == nminus51 + n753) << "753 + (-51) = 702 vs -51 + 753 = 702";
+    ASSERT_TRUE(n753 + nminus575 == nminus575 + n753) << "753 + (-575) = 178 vs -575 + 753 = 178";
+}
+
+TEST(LongNumberArithmeticAdvanced, MultiplyingCommutativity) {
+    LongNumber n431("431");
+    LongNumber n753("753");
+    ASSERT_TRUE(n431 * n753 == n753 * n431) << "431 * 753 = 324,843 vs 753 * 431 = 324,843";
+
+    LongNumber nminus575("-575");
+    LongNumber nminus51("-51");
+    ASSERT_TRUE(nminus575 * nminus51 == nminus51 * nminus575) << "-575 * -51 = 29,325 vs -51 * -575 = 29,325";
+    ASSERT_TRUE(n753 * nminus51 == nminus51 * n753) << "753 * -51 = -38,403 vs -51 * 753 = -38,403";
+    ASSERT_TRUE(n753 * nminus575 == nminus575 * n753) << "753 * -575 = -432,975 vs -575 * 753 = -432,975";
+}
+
+TEST(LongNumberArithmeticAdvanced, MultiplyAllCases) {
+    LongNumber n2("2");
+    LongNumber n3("3");
+    LongNumber n6("6");
+    LongNumber nminus6("-6");
+    LongNumber n0("0");
+    LongNumber n123("123");
+    LongNumber nminus123("-123");
+    LongNumber n456("456");
+    LongNumber n56088("56088");
+    LongNumber nminus56088("-56088");
+    LongNumber n999("999");
+    LongNumber n999x999("998001");
+    LongNumber nminus1("-1");
+    LongNumber n1("1");
+
+    ASSERT_TRUE(n2 * n3 == n6) << "2 * 3 = 6";
+    ASSERT_TRUE(n2 * nminus6 == nminus6 * n2) << "2 * (-6) = (-6) * 2 = -12";
+    ASSERT_TRUE(nminus123 * nminus1 == n123) << "-123 * -1 = 123";
+
+    ASSERT_TRUE(n123 * n0 == n0) << "123 * 0 = 0";
+    ASSERT_TRUE(nminus6 * n0 == n0) << "-6 * 0 = 0";
+
+    ASSERT_TRUE(n123 * n1 == n123) << "123 * 1 = 123";
+    ASSERT_TRUE(n123 * nminus1 == nminus123) << "123 * -1 = -123";
+
+    ASSERT_TRUE(n123 * n456 == n56088) << "123 * 456 = 56088";
+    ASSERT_TRUE(nminus123 * n456 == nminus56088) << "-123 * 456 = -56088";
+    ASSERT_TRUE(n999 * n999 == n999x999) << "999 * 999 = 998001";
 }
