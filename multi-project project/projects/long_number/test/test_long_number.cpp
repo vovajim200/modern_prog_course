@@ -157,6 +157,59 @@ TEST(LongNumberArithmetic, CommutativeAdditionTest) {
     ASSERT_TRUE(a + b == b + a);
 }
 
+TEST(LongNumberCompareAbs, PositiveDiffLength) {
+    LongNumber a("123");
+    LongNumber b("1234");
+    ASSERT_FALSE(a.compare_abs(b));
+    ASSERT_TRUE(b.compare_abs(a));
+}
+
+TEST(LongNumberCompareAbs, PositiveSameLength) {
+    LongNumber a("642");
+    LongNumber b("641");
+    ASSERT_TRUE(a.compare_abs(b));
+    ASSERT_FALSE(b.compare_abs(a));
+}
+
+TEST(LongNumberCompareAbs, PositiveAndZero) {
+    LongNumber a("11");
+    LongNumber b("0");
+    ASSERT_TRUE(a.compare_abs(b));
+}
+
+TEST(LongNumberCompareAbs, TwoEqualPositives) {
+    LongNumber a("542");
+    LongNumber b("542");
+    ASSERT_FALSE(a.compare_abs(b));
+}
+
+TEST(LongNumberCompareAbs, NegativeDiffLength) {
+    LongNumber a("-314");
+    LongNumber b("-3466");
+    ASSERT_FALSE(a.compare_abs(b));
+    ASSERT_TRUE(b.compare_abs(a));
+}
+
+TEST(LongNumberCompareAbs, NegativeSameLength) {
+    LongNumber a("-256");
+    LongNumber b("-255");
+    ASSERT_TRUE(a.compare_abs(b));
+    ASSERT_FALSE(b.compare_abs(a));
+}
+
+TEST(LongNumberCompareAbs, NegativeAndZero) {
+    LongNumber a("-69");
+    LongNumber b("0");
+    ASSERT_TRUE(a.compare_abs(b));
+}
+
+TEST(LongNumberCompareAbs, TwoEqualNegatives) {
+    LongNumber a("-36");
+    LongNumber b("-36");
+    ASSERT_FALSE(a.compare_abs(b));
+}
+
+
 // TEST(LongNumberArithMetic, SimpleSubstraction) {
 //     LongNumber a = "1234";
 //     LongNumber b = "123";

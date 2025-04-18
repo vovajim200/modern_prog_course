@@ -254,6 +254,24 @@ bool LongNumber::is_negative() const noexcept {
 	return sign == -1;
 }
 
+// true если больше
+bool LongNumber::compare_abs(const LongNumber& x) const {
+	// смотрим по длине
+	if (length != x.length) {
+		return length > x.length;
+	}
+
+	// сравниваем разряды
+	for (int i = length - 1; i >= 0; --i) {
+		if (numbers[i] != x.numbers[i]) {
+			return numbers[i] > x.numbers[i];
+		}
+	}
+
+	// одинаковы по длине и одинаковые разряды => равны
+	return false;
+}
+
 // ----------------------------------------------------------
 // PRIVATE
 // ----------------------------------------------------------
