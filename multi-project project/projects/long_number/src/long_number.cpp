@@ -205,7 +205,20 @@ LongNumber LongNumber::sub_abs(const LongNumber& x, const LongNumber& y) const {
 // Если противоположные - идем в вычитание
 
 LongNumber LongNumber::operator + (const LongNumber& x) const {
-	
+	if (sign == 0) return x; 					// 0 + x = x
+	if (x.sign == 0) return *this;				// x + 0 = x
+
+	if (sign == x.sign) {
+		return add_abs(*this, x, sign);
+	}
+
+	if (sign == 1) {
+		return sub_abs(*this, x);				// +x + (-y) = x - y
+	} else {
+		LongNumber temp = sub_abs(x, *this);	// (-x) + y = y -x
+		temp.sign = (temp.length == 1 && temp.numbers[0] == 0) ? 0 : 1;
+		return temp;
+	}
 }
 
 // Если один из аргументов ноль - меняем знак
