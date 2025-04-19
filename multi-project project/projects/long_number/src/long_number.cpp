@@ -133,6 +133,8 @@ bool LongNumber::operator > (const LongNumber& x) const {
 			return (numbers[i] > x.numbers[i]) ? (sign == 1) : (sign != 1);
 		}
 	}
+
+	return false;
 }
 
 bool LongNumber::operator < (const LongNumber& x) const {
@@ -266,7 +268,7 @@ LongNumber LongNumber::operator - (const LongNumber& x) const {
 	// 0 - a = -a, меняем знак
 	if (sign == 0) {
 		LongNumber result = x;
-		result.sign = !x.sign;
+		result.sign = -x.sign;
 		return result;
 	}
 	if (x.sign == 0) return x; // a - 0 = a
@@ -308,11 +310,76 @@ LongNumber LongNumber::operator * (const LongNumber& x) const {
 }
 
 LongNumber LongNumber::operator / (const LongNumber& x) const {
-	// TODO
+    if (x.sign == 0) throw std::runtime_error("Division by zero");
+    if (sign == 0) return LongNumber();
+
+    // Работаем с абсолютными значениями
+    LongNumber dividend = abs(*this);
+    LongNumber divisor = abs(x);
+
+    if (dividend < divisor) return LongNumber("0");
+
+    LongNumber quotient;
+    LongNumber current_dividend;
+    quotient.numbers = new int[dividend.length]();
+    quotient.length = 0;
+
+    for (int i = dividend.length - 1; i >= 0; i--) {
+        current_dividend = current_dividend * LongNumber("10") + LongNumber(std::to_string(dividend.numbers[i]).c_str());
+        
+        if (current_dividend < divisor) {
+            quotient.numbers[quotient.length++] = 0;
+            continue;
+        }
+
+        int count = 0;
+        LongNumber temp = divisor;
+        while (temp < current_dividend || temp == current_dividend) {
+            temp = temp + divisor;
+            count++;
+        }
+        
+        quotient.numbers[quotient.length++] = count;
+        current_dividend = current_dividend - (divisor * LongNumber(std::to_string(count).c_str()));
+    }
+
+    // Разворачиваем цифры частного (храним младшие разряды первыми)
+    for (int i = 0; i < quotient.length / 2; ++i) {
+
+		int temp = quotient.numbers[i];
+		quotient.numbers[i] = quotient.numbers[quotient.length - 1 - i];
+		quotient.numbers[quotient.length - 1 - i] = temp;
+	}
+    
+    // Удаляем ведущие нули
+    while (quotient.length > 1 && quotient.numbers[quotient.length - 1] == 0) {
+        quotient.length--;
+    }
+
+    quotient.sign = (sign == x.sign) ? 1 : -1;
+    return quotient;
 }
 
-LongNumber LongNumber::operator % (const LongNumber& x) const {
-	// TODO
+LongNumber LongNumber::operator % ( const LongNumber& x) const {
+    if (x.sign == 0) throw std::runtime_error("Division by zero");
+    
+    // Вычисляем частное и остаток
+    LongNumber quotient = *this / x;
+    LongNumber remainder = *this - (quotient * x);
+    
+    // Корректируем остаток в диапазон [0, |x|)
+    if (remainder != LongNumber("0")) {
+        LongNumber abs_x = abs(x);
+        if (remainder.is_negative()) {
+            remainder = remainder + abs_x;
+        } else if (remainder > abs_x || remainder == abs(x)) {
+            remainder = remainder - abs_x;
+        }
+        // Всегда устанавливаем положительный знак
+        remainder.sign = 1;
+    }
+    
+    return remainder;
 }
 
 int LongNumber::get_digits_number() const noexcept {
@@ -346,12 +413,22 @@ bool LongNumber::compare_abs(const LongNumber& x) const {
 }
 
 bool LongNumber::abs_equal(const LongNumber& x) const {
-	if (length == x.length) {
-		for (int i = length - 1; i >= 0; --i) {
-			return (numbers[i] == x.numbers[i]);
+	if (length != x.length) {
+		return false;
+	} else {
+		for (int i = 0; i < length; ++i) {
+			if (numbers[i] != x.numbers[i]) {
+				return false;
+			}
 		}
 	}
-	return false;
+	return true;
+}
+
+LongNumber LongNumber::abs(const LongNumber& x) const {
+    LongNumber result = x;
+    result.sign = 1;
+    return result;
 }
 
 // ----------------------------------------------------------

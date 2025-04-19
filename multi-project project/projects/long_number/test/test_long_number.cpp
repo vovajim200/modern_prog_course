@@ -290,3 +290,35 @@ TEST(LongNumberArithmeticAdvanced, MultiplyAllCases) {
     ASSERT_TRUE(nminus123 * n456 == nminus56088) << "-123 * 456 = -56088";
     ASSERT_TRUE(n999 * n999 == n999x999) << "999 * 999 = 998001";
 }
+
+TEST(LongNumberArithmeticAdvanced, DivideAllCases) {
+    LongNumber n12("12"); LongNumber n15("15"); LongNumber n7("7"); LongNumber n10("10"); 
+    LongNumber n4("4"); LongNumber n3("3"); LongNumber nminus3("-3"); LongNumber n0("0");
+    LongNumber n123("123"); LongNumber nminus123("-123"); LongNumber n456("456"); LongNumber n87("87");
+    LongNumber n333("333"); LongNumber n5("5"); LongNumber n2("2"); LongNumber n1("1");
+
+    ASSERT_TRUE(n12 / n4 == n3) << "12 / 4 = 3";
+    ASSERT_TRUE(n15 / n4 == n3) << "15 / 4 = 3";
+    ASSERT_TRUE(n7 / n3 == n2) << "7 / 3 = 2";
+    ASSERT_TRUE(n10 / nminus3 == LongNumber("-3")) << "10 / (-3) = -3";
+    ASSERT_TRUE(nminus123 / n3 == LongNumber("-41")) << "-123 / 3 = -41";
+    ASSERT_TRUE(nminus123 / nminus123 == n1) << "-123 / -123 = 1";
+    ASSERT_TRUE(n456 / n123 == n3) << "456 / 123 = 3";
+    ASSERT_TRUE(n5 / n10 == n0) << "5 / 10 = 0";
+}
+
+TEST(LongNumberArithmeticAdvanced, ModAllCases) {
+    LongNumber n12("12"); LongNumber n15("15"); LongNumber n7("7"); LongNumber n10("10");
+    LongNumber n4("4"); LongNumber n3("3"); LongNumber nminus3("-3"); LongNumber n0("0");
+    LongNumber n123("123"); LongNumber nminus123("-123"); LongNumber n456("456"); LongNumber n87("87");
+    LongNumber n333("333"); LongNumber n5("5"); LongNumber n2("2"); LongNumber n1("1");
+    
+    ASSERT_TRUE(n12 % n4 == n0) << "12 % 4 = 0";
+    ASSERT_TRUE(n15 % n4 == n3) << "15 % 4 = 3";
+    ASSERT_TRUE(n7 % n3 == n1) << "7 % 3 = 1";
+    ASSERT_TRUE(n10 % nminus3 == n1) << "10 % (-3) = 1";
+    ASSERT_TRUE(nminus123 % n3 == n0) << "-123 % 3 = 0";
+    ASSERT_TRUE(n456 % n123 == n87) << "456 % 123 = 87";
+    ASSERT_TRUE(n0 % n123 == n0) << "0 % 123 = 0";
+    ASSERT_TRUE(n5 % n10 == n5) << "5 % 10 = 5";
+}
