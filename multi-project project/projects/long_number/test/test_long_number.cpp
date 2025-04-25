@@ -312,13 +312,26 @@ TEST(LongNumberArithmeticAdvanced, ModAllCases) {
     LongNumber n4("4"); LongNumber n3("3"); LongNumber nminus3("-3"); LongNumber n0("0");
     LongNumber n123("123"); LongNumber nminus123("-123"); LongNumber n456("456"); LongNumber n87("87");
     LongNumber n333("333"); LongNumber n5("5"); LongNumber n2("2"); LongNumber n1("1");
+    LongNumber nminus5("-5"); LongNumber nminus2("-2");
     
-    ASSERT_TRUE(n12 % n4 == n0) << "12 % 4 = 0";
-    ASSERT_TRUE(n15 % n4 == n3) << "15 % 4 = 3";
-    ASSERT_TRUE(n7 % n3 == n1) << "7 % 3 = 1";
-    ASSERT_TRUE(n10 % nminus3 == n1) << "10 % (-3) = 1";
-    ASSERT_TRUE(nminus123 % n3 == n0) << "-123 % 3 = 0";
+    // положительные делимое и делитель
+    ASSERT_TRUE(n12  % n4   == n0)  << "12 % 4 = 0";
+    ASSERT_TRUE(n15  % n4   == n3)  << "15 % 4 = 3";
+    ASSERT_TRUE(n7   % n3   == n1)  << "7 % 3 = 1";
+    ASSERT_TRUE(n5   % n10  == n5)  << "5 % 10 = 5";
     ASSERT_TRUE(n456 % n123 == n87) << "456 % 123 = 87";
-    ASSERT_TRUE(n0 % n123 == n0) << "0 % 123 = 0";
-    ASSERT_TRUE(n5 % n10 == n5) << "5 % 10 = 5";
+    ASSERT_TRUE(n0   % n123 == n0)  << "0 % 123 = 0";
+
+    // положительное делимое, отрицательный делитель
+    ASSERT_TRUE(n10 % nminus3 == n1) << "10 % (-3) = 1";
+    ASSERT_TRUE(n15 % LongNumber("-4") == n3) << "15 % (-4) = 3";
+
+    // отрицательное делимое, положительный делитель
+    ASSERT_TRUE(nminus123 % n3  == n0)      << "-123 % 3 = 0";
+    ASSERT_TRUE(nminus5   % n3  == nminus2) << "-5 % 3 = -2";
+    ASSERT_TRUE(nminus5   % n10 == nminus5) << "-5 % 10 = -5";
+
+    // отрицательное делимое и отрицательный делитель
+    ASSERT_TRUE(nminus5   % LongNumber("-3")  == nminus2) << "-5 % -3 = -2";
+    ASSERT_TRUE(nminus123 % LongNumber("-10") == nminus3) << "-123 % -10 = -3";
 }

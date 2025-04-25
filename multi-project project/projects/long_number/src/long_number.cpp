@@ -271,7 +271,7 @@ LongNumber LongNumber::operator - (const LongNumber& x) const {
 		result.sign = -x.sign;
 		return result;
 	}
-	if (x.sign == 0) return x; // a - 0 = a
+	if (x.sign == 0) return *this; // a - 0 = a
 
 	// (-x) - (+y) = -(x+y)
 	// x - (-y) = x + y
@@ -360,25 +360,20 @@ LongNumber LongNumber::operator / (const LongNumber& x) const {
     return quotient;
 }
 
-LongNumber LongNumber::operator % ( const LongNumber& x) const {
+// Остаток от a % b по определению: a - (a / b) * b
+// имеет тот же знак что и делимое
+LongNumber LongNumber::operator % (const LongNumber& x) const {
     if (x.sign == 0) throw std::runtime_error("Division by zero");
-    
-    // Вычисляем частное и остаток
+    if (sign == 0) return LongNumber();
+
+	// если делимое меньше делителя
+	if (!this->compare_abs(x)) {
+		return *this;
+	}
+
     LongNumber quotient = *this / x;
     LongNumber remainder = *this - (quotient * x);
-    
-    // Корректируем остаток в диапазон [0, |x|)
-    if (remainder != LongNumber("0")) {
-        LongNumber abs_x = abs(x);
-        if (remainder.is_negative()) {
-            remainder = remainder + abs_x;
-        } else if (remainder > abs_x || remainder == abs(x)) {
-            remainder = remainder - abs_x;
-        }
-        // Всегда устанавливаем положительный знак
-        remainder.sign = 1;
-    }
-    
+
     return remainder;
 }
 
