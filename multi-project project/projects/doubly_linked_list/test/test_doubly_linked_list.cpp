@@ -21,6 +21,17 @@ TEST(DoublyLinkedListTests, PushBack) {
 	EXPECT_FALSE(list.has_item(101));
 }
 
+TEST(DoublyLinkedListTests, RemoveFirst) {
+	DoublyLinkedList<int> list;
+	for (int i = 0; i < 10; ++i) {
+		list.push_back(i);
+	}
+	list.remove_first(0);
+	EXPECT_EQ(list.get_size(), 9);
+	EXPECT_FALSE(list.remove_first(0));
+	EXPECT_FALSE(list.has_item(0));
+}
+
 int main(int argc, char **argv) {
 	::testing::InitGoogleTest(&argc, argv);
 	return RUN_ALL_TESTS();

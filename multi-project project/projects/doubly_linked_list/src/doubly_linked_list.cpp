@@ -56,7 +56,26 @@ void DoublyLinkedList<T>::push_back(const T& value) {
 
 template<typename T>
 bool DoublyLinkedList<T>::remove_first(const T& value) noexcept {
-	// TODO
+	for (Node* cur = begin; cur; cur = cur->next) {
+        if (cur->value == value) {
+            // переподвязываем соседей
+            if (cur->prev) {
+                cur->prev->next = cur->next;
+			} else {
+                begin = cur->next; // удаляем первый
+			}
+
+            if (cur->next) {
+                cur->next->prev = cur->prev;
+			} else {
+                end = cur->prev; // удаляем последний
+			}
+
+            delete cur;
+            return true;
+        }
+	}
+    return false;
 }
 
 template class DoublyLinkedList<int>;
